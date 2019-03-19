@@ -1,0 +1,9 @@
+﻿@model IEnumerable<fpReceitas.Web.Models.Noticia>
+<ul>
+    @foreach (var item in Model)
+    {
+        <li style="background-color:red">
+            @item.Titulo
+        </li>
+    }
+</ul>
