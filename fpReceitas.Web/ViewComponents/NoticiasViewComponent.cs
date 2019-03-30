@@ -1,4 +1,5 @@
-﻿using fpReceitas.Web.Models;
+﻿using fpReceitas.Core.Services;
+using fpReceitas.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,12 @@ namespace fpReceitas.Web.ViewComponents
 {
     public class NoticiasViewComponent : ViewComponent
     {
+        private NoticiaService _noticiaService;
+
+        public NoticiasViewComponent(NoticiaService noticiaService)
+        {
+            _noticiaService = noticiaService;
+        }
         public async Task<IViewComponentResult> InvokeAsync(
             int total, bool noticiasUrgentes)
         {
@@ -19,16 +26,9 @@ namespace fpReceitas.Web.ViewComponents
                 view = "noticiasurgentes";
             }
 
-            var items = GetItems(total);
+            var items = _noticiaService.GetItens(total);
             return View(view, items);
         }
 
-        private IEnumerable<Noticia> GetItems(int total)
-        {
-            for (int i = 0; i < total; i++)
-            {
-                yield return new Noticia() { Id = 1, Titulo = $"Noticia {i}", Link = $"http://{i}" };
-            }
-        }
     }
 }

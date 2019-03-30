@@ -1,4 +1,5 @@
 ﻿using fpReceitas.Core.Contexts;
+using fpReceitas.Core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +33,8 @@ namespace fpReceitas.Web
             var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<ReceitaContext>(options => options.UseSqlServer(connection));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddTransient<NoticiaService>();
 
             services.AddDataProtection().SetApplicationName("admin")
                 .PersistKeysToFileSystem(new System.IO.DirectoryInfo("c:/rodolfo"));

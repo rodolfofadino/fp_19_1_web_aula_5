@@ -1,9 +1,14 @@
-﻿@model IEnumerable<fpReceitas.Web.Models.Noticia>
-<ul>
+﻿@model IEnumerable<fpReceitas.Core.Models.Noticia>
+<ul class="noticias">
     @foreach (var item in Model)
     {
-        <li style="background-color:red">
-            @item.Titulo
+        <li>
+            <a href="@item.Url">
+                <img src="@item.Imagem" alt="@item.DescricaoImagem" />
+                <span>
+                    @item.Titulo
+                </span>
+            </a>
         </li>
     }
 </ul>

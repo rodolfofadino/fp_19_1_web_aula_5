@@ -2,13 +2,132 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div id="carroseul">
+        <div class="jcarousel-wrapper">
+            <div class="jcarousel">
+                <ul>
+                    <li>
+                        <img class="carroseulimage" src="~/assets/dims.jpeg" />
+                    </li>
+                    <li>
+                        <img class="carroseulimage" src="~/assets/gamemaster.jpg" />
+                    </li>
+                    <li>
+                        <img class="carroseulimage" src="~/assets/Gorgeous-Cisco-Wallpaper.jpg" />
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+                <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+            </div>
+            <div>	    </div>
+
+        </div>
+    </div>
 </div>
-@await Component.InvokeAsync("Noticias", new { total = 3, noticiasUrgentes = false })
 
-<vc:noticias total="4" noticias-urgentes="true">
-</vc:noticias>
+<script>
+    (function ($) {
+        $(function () {
+            var jcarousel = $('.jcarousel');
 
-<email mail-to="rodolfo"></email>
+            jcarousel
+                .on('jcarousel:reload jcarousel:create', function () {
+                    var carousel = $(this),
+                        width = carousel.innerWidth();
+
+
+                    carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
+                })
+                .jcarousel({
+                    wrap: 'circular'
+                });
+
+            $('.jcarousel-control-prev')
+                .jcarouselControl({
+                    target: '-=1'
+                });
+
+            $('.jcarousel-control-next')
+                .jcarouselControl({
+                    target: '+=1'
+                });
+
+            $('.jcarousel-pagination')
+                .on('jcarouselpagination:active', 'a', function () {
+                    $(this).addClass('active');
+                })
+                .on('jcarouselpagination:inactive', 'a', function () {
+                    $(this).removeClass('active');
+                })
+                .on('click', function (e) {
+                    e.preventDefault();
+                })
+                .jcarouselPagination({
+                    perPage: 1,
+                    item: function (page) {
+                        return '<a href="#' + page + '">' + page + '</a>';
+                    }
+                });
+        });
+    })(jQuery);
+</script>
+
+<div class="row">
+    <div id="menu">
+        <ul>
+            <li>
+                <img class="icon" src="~/assets/category/acer.JPG" />
+                Acer
+            </li>
+            <li>
+                <img class="icon" src="~/assets/category/apple.JPG" />
+                Apple
+            </li>
+            <li>
+                <img class="icon" src="~/assets/category/asus.JPG" />
+                Asus
+            </li>
+            <li>
+                <img class="icon" src="~/assets/category/black.JPG" />
+                Black
+            </li>
+            <li>
+                <img class="icon" src="~/assets/category/blue.JPG" />
+                Blue
+            </li>
+            <li>
+                <img class="icon" src="~/assets/category/carton.JPG" />
+                Cartoon
+            </li>
+            <li>
+                <img class="icon" src="~/assets/category/computer.JPG" />
+                Computer
+            </li>
+            <li>
+                <img class="icon" src="~/assets/category/lenovo.JPG" />
+                Lenovo
+            </li>
+            <li>
+                <img class="icon" src="~/assets/category/pink.JPG" />
+                Pink
+            </li>
+            <li>
+                <img class="icon" src="~/assets/category/rose.JPG" />
+                Rose
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div id="noticias">
+        @await Component.InvokeAsync("Noticias", new { total = 3, noticiasUrgentes = false })
+    </div>
+</div>
+    <vc:noticias total="4" noticias-urgentes="true">
+    </vc:noticias>
+
+    <email mail-to="rodolfo"></email>
