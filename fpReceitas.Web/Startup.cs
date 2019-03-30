@@ -1,13 +1,12 @@
-﻿using fpReceitas.Web.Middlewares;
+﻿using fpReceitas.Core.Contexts;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using fpReceitas.Core;
-using fpReceitas.Core.Contexts;
-using Microsoft.EntityFrameworkCore;
 
 namespace fpReceitas.Web
 {
@@ -33,6 +32,16 @@ namespace fpReceitas.Web
             var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<ReceitaContext>(options => options.UseSqlServer(connection));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddDataProtection().SetApplicationName("admin")
+                .PersistKeysToFileSystem(new System.IO.DirectoryInfo("c:/rodolfo"));
+
+            services.AddAuthentication("admin")
+                .AddCookie("admin", a => {
+                    a.LoginPath = "/account/login";
+                    a.AccessDeniedPath = "/account/denied";
+                });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,6 +99,8 @@ namespace fpReceitas.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

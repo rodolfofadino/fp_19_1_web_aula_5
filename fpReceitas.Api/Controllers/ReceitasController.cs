@@ -1,6 +1,8 @@
-﻿using fpReceitas.Core.Contexts;
+﻿using fpReceitas.Api.Custom;
+using fpReceitas.Core.Contexts;
 using fpReceitas.Core.Migrations;
 using fpReceitas.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +18,8 @@ namespace fpReceitas.Api.Controllers
     [Route("api/[Controller]")]
     [ApiController]
     [EnableCors("default")]
+    //[CustomAuthorize(teste:"Oi")]
+    [Authorize]
 
     public class ReceitasController: Controller
     {

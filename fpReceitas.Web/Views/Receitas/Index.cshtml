@@ -31,7 +31,9 @@
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ModoDePreparo)
+                
+                @Html.Raw(item.ModoDePreparo)
+
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Ingredientes)

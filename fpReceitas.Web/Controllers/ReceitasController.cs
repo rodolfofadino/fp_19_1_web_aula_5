@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using fpReceitas.Core.Contexts;
 using fpReceitas.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace fpReceitas.Web.Controllers
 {
+    [Authorize]
     public class ReceitasController : Controller
     {
         private readonly ReceitaContext _context;
@@ -22,6 +24,7 @@ namespace fpReceitas.Web.Controllers
         // GET: Receitas
         public async Task<IActionResult> Index()
         {
+            var a = User.Identity.Name;
             return View(await _context.Receitas.ToListAsync());
         }
 
@@ -117,6 +120,7 @@ namespace fpReceitas.Web.Controllers
         }
 
         // GET: Receitas/Delete/5
+        [Authorize(Roles ="admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +141,7 @@ namespace fpReceitas.Web.Controllers
         // POST: Receitas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var receita = await _context.Receitas.FindAsync(id);
